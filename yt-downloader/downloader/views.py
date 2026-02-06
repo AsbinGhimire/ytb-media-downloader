@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 import yt_dlp
 import os
 
@@ -31,8 +32,8 @@ def home(request):
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            message = "Download completed ✅"
+            return JsonResponse({'status': 'success', 'message': 'Download completed ✅'})
         except Exception as e:
-            message = f"Error: {e}"
+            return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'})
 
-    return render(request, 'downloader/index.html', {'message': message})
+    return render(request, 'downloader/index.html')
