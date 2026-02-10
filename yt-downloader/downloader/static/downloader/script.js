@@ -3,6 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const statusMessage = document.getElementById('status-message');
     const urlInput = document.getElementById('url');
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    // Theme Logic
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'light' || (!savedTheme && !systemPrefersDark)) {
+        document.body.setAttribute('data-theme', 'light');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Add a small rotation effect to icon
+        const icon = themeToggle.querySelector(newTheme === 'light' ? '.theme-icon-sun' : '.theme-icon-moon');
+        icon.style.transform = 'rotate(360deg)';
+        setTimeout(() => icon.style.transform = '', 500);
+    });
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();

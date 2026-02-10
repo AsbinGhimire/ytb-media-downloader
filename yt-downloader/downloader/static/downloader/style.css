@@ -15,6 +15,19 @@
     --radius-sm: 12px;
 }
 
+[data-theme="light"] {
+    --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
+    --bg-gradient: radial-gradient(at 0% 0%, hsla(210, 100%, 96%, 1) 0, transparent 50%), 
+                   radial-gradient(at 50% 0%, hsla(220, 100%, 90%, 1) 0, transparent 50%), 
+                   radial-gradient(at 100% 0%, hsla(280, 100%, 94%, 1) 0, transparent 50%);
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --input-bg: rgba(255, 255, 255, 0.7);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -147,14 +160,14 @@ input[type="url"] {
     background: var(--input-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    color: white;
+    color: var(--text-main);
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;
 }
 
 input[type="url"]::placeholder {
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 input[type="url"]:focus {
@@ -205,7 +218,7 @@ input[type="url"]:focus {
 
 .radio-label:hover:not(:has(input:checked)) {
     background: rgba(255, 255, 255, 0.05);
-    color: white;
+    color: var(--text-main);
 }
 
 /* Submit Button */
@@ -286,6 +299,50 @@ button:disabled {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Theme Toggle */
+.theme-toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--glass-shadow);
+    z-index: 100;
+    transition: all 0.3s ease;
+    color: var(--text-main);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.theme-icon-sun {
+    display: none;
+}
+
+[data-theme="light"] .theme-icon-moon {
+    display: none;
+}
+
+[data-theme="light"] .theme-icon-sun {
+    display: block;
 }
 
 /* Responsiveness */
