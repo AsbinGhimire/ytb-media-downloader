@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}YT Downloader - Premium Video & Audio{% endblock %}</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'downloader/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Layout Wrapper -->
+    <div class="app-wrapper">
+        {% include 'downloader/includes/navbar.html' %}
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include 'downloader/includes/footer.html' %}
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'downloader/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

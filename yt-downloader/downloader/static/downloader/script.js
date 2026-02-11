@@ -21,9 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', newTheme);
         
         // Add a small rotation effect to icon
-        const icon = themeToggle.querySelector(newTheme === 'light' ? '.theme-icon-sun' : '.theme-icon-moon');
-        icon.style.transform = 'rotate(360deg)';
-        setTimeout(() => icon.style.transform = '', 500);
+        const icon = themeToggle.querySelector(newTheme === 'light' ? '.icon-sun' : '.icon-moon');
+        if (icon) {
+            icon.style.transform = 'rotate(360deg)';
+            setTimeout(() => icon.style.transform = '', 500);
+        }
     });
 
     form.addEventListener('submit', async (e) => {
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // UI Loading State
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="loader"></span> Processing...';
+        submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
         statusMessage.className = 'status-message'; // Reset classes
         statusMessage.style.display = 'none';
 

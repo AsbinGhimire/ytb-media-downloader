@@ -1,89 +1,98 @@
+{% extends 'downloader/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT Downloader</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'downloader/style.css' %}">
-</head>
+{% block content %}
+<section class="hero-section">
+    <h1 class="hero-title">
+        Download YouTube <br>
+        <span class="highlight"
+            style="background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Content
+            Instantly</span>
+    </h1>
+    <p class="hero-subtitle">
+        Convert and download high-quality videos and audios from YouTube. Safe, free, and incredibly fast.
+    </p>
 
-<body>
-
-    <!-- Background Blobs -->
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-
-    <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
-        <svg class="theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-        </svg>
-        <svg class="theme-icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-            </path>
-        </svg>
-    </button>
-
-    <div class="container">
-        <h1>YT Downloader</h1>
-        <p class="subtitle">Download high-quality videos and audio instantly.</p>
-
-        <form id="download-form">
+    <div class="download-card">
+        <form id="download-form" method="POST">
             {% csrf_token %}
-            <div class="input-group">
-                <label for="url">Paste YouTube URL</label>
-                <input type="url" id="url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+            <div class="input-wrapper">
+                <input type="url" name="url" id="url" class="url-input" placeholder="Paste YouTube link here..."
+                    required>
             </div>
 
-            <div class="format-selector">
-                <div class="radio-group">
-                    <input type="radio" id="video" name="format" value="best" checked>
-                    <label class="radio-label" for="video">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                            <line x1="7" y1="2" x2="7" y2="22"></line>
-                            <line x1="17" y1="2" x2="17" y2="22"></line>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <line x1="2" y1="7" x2="7" y2="7"></line>
-                            <line x1="2" y1="17" x2="7" y2="17"></line>
-                            <line x1="17" y1="17" x2="22" y2="17"></line>
-                            <line x1="17" y1="7" x2="22" y2="7"></line>
+            <div class="options-grid">
+                <div class="option-box">
+                    <input type="radio" name="format" id="video" value="best" checked>
+                    <label for="video" class="option-label">
+                        <svg class="option-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
                         </svg>
-                        Video
+                        <span class="option-text">Video (MP4)</span>
                     </label>
                 </div>
-                <div class="radio-group">
-                    <input type="radio" id="audio" name="format" value="audio">
-                    <label class="radio-label" for="audio">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 18V5l12-2v13"></path>
-                            <circle cx="6" cy="18" r="3"></circle>
-                            <circle cx="18" cy="16" r="3"></circle>
+                <div class="option-box">
+                    <input type="radio" name="format" id="audio" value="audio">
+                    <label for="audio" class="option-label">
+                        <svg class="option-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3">
+                            </path>
                         </svg>
-                        Audio
+                        <span class="option-text">Audio (MP3)</span>
                     </label>
                 </div>
             </div>
 
-            <button type="submit" id="submit-btn">
-                <span>Download Now</span>
+            <button type="submit" id="submit-btn" class="download-btn">
+                <span>Start Download</span>
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
             </button>
         </form>
 
         <div id="status-message" class="status-message"></div>
     </div>
+</section>
 
-    <script src="{% static 'downloader/script.js' %}"></script>
-</body>
-
-</html>
+<section id="features" class="features-section">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <h3 class="feature-title">Lightning Fast</h3>
+            <p class="feature-desc">Our optimized engine ensures you get your downloads in the highest speed possible.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 class="feature-title">High Quality</h3>
+            <p class="feature-desc">Download videos in HD, 1080p, and even 4K resolution whenever available.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                    </path>
+                </svg>
+            </div>
+            <h3 class="feature-title">Safe & Secure</h3>
+            <p class="feature-desc">No registration required. We don't track your downloads or store your data.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
